@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="外部接口">
+      <UniqueIdentifier>{3a619ca3-cd21-46cf-b3ee-763785c4d005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="判断逻辑">
+      <UniqueIdentifier>{d6db6548-ce8e-4121-8b90-0595b37a9f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="数据库查询">
+      <UniqueIdentifier>{b2d255cc-2e71-49d9-af39-707b80dcc190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="其他文件">
+      <UniqueIdentifier>{171ae4cb-a852-429a-b939-e4176f2b2a6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="显示窗口">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="打印功能">
+      <UniqueIdentifier>{c9990a72-522e-47bb-b91d-1cc0e596b0e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="模块开关">
+      <UniqueIdentifier>{0c8cebd2-0f85-4042-80f1-6772136d0ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="索引工具">
+      <UniqueIdentifier>{3d45eb5d-675e-47d9-beab-1809c26db027}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\MIES.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="MIES.def">
+      <Filter>其他文件</Filter>
+    </None>
+    <None Include="testmfcdllapp\testmfcdllapp\testmfcdllapp_temporarykey.pfx" />
+    <None Include="res\logo.jpg">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\logo.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MIES.cpp">
+      <Filter>外部接口</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>其他文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicHandler.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_dao.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_group.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="sql_processor.cpp">
+      <Filter>数据库查询</Filter>
+    </ClCompile>
+    <ClCompile Include="PatientPreSettlementInfoDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="PatientZBInfoDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="PatientInfoDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectCheckInfoDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="MedicalInsuranceInfoDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintSelfConsentDlg.cpp">
+      <Filter>显示窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="AddItemDlg.cpp">
+      <Filter>显示窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPrinter.cpp">
+      <Filter>打印功能</Filter>
+    </ClCompile>
+    <ClCompile Include="DailyListDlg.cpp">
+      <Filter>显示窗口</Filter>
+    </ClCompile>
+    <ClCompile Include="UserModuleController.cpp">
+      <Filter>模块开关</Filter>
+    </ClCompile>
+    <ClCompile Include="OutpatientServiceDataHandlerFun.cpp">
+      <Filter>判断逻辑</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexManager.cpp">
+      <Filter>索引工具</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MIES.h">
+      <Filter>外部接口</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>其他文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>其他文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>其他文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicHandler.h">
+      <Filter>判断逻辑</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_dao.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_group.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_processor.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="sql_public.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>数据库查询</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintSelfConsentDlg.h">
+      <Filter>显示窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="AddItemDlg.h">
+      <Filter>显示窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="DailyListDlg.h">
+      <Filter>显示窗口</Filter>
+    </ClInclude>
+    <ClInclude Include="UserModuleController.h">
+      <Filter>模块开关</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexManager.h">
+      <Filter>索引工具</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPrinter.h">
+      <Filter>打印功能</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MIES.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

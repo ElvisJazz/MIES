@@ -1,0 +1,2473 @@
+<?xml version='1.0'  encoding='GBK' ?>
+<CONFIG>
+	<GROUP type='USER_COMMAND_Parameter' activate='yes' description='模块开关参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%模块开关%'
+				AND	
+					A.CHARGE_TYPE='ALL' 			
+			</SQL>
+			<PARAMETERS>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YBInfoParameter' activate='yes' description='提示类参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%提示类%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT B
+				WHERE
+					B.PATIENT_ID=?
+				AND
+					B.VISIT_ID=?))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YBPreSettlementInfoParameter' activate='yes' description='显示类参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%显示类%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT B
+				WHERE
+					B.PATIENT_ID=?
+				AND
+					B.VISIT_ID=?))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YBZBParameter' activate='yes' description='是否办理医保手续审查参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%医保手续%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT B
+				WHERE
+					B.PATIENT_ID=?
+				AND
+					B.VISIT_ID=?))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YYTSParameter' activate='yes' description='用药提示（医保目录对应）参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%用药提示%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=?)				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='ZFZQTYSParameter_NO_VISITID' activate='yes' description='自费知情同意书打印参数查询(无需visit_id)'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%自费知情同意书%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT B
+				WHERE
+					B.PATIENT_ID=?
+				AND
+					B.VISIT_ID=(SELECT 
+					VISIT_ID 
+				FROM (SELECT 
+					VISIT_ID 
+				FROM 
+					PAT_VISIT
+				WHERE
+					PATIENT_ID=?
+				ORDER BY 
+					VISIT_ID
+				DESC )
+				WHERE 
+					2>ROWNUM)))						
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='ZFZQTYSParameter_VISITID' activate='yes' description='自费知情同意书打印参数查询(有visit_id)'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%自费知情同意书%'
+				AND	
+					(A.CHARGE_TYPE='ALL' 
+				OR 	
+					A.CHARGE_TYPE=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT B
+				WHERE
+					B.PATIENT_ID=?
+				AND
+					B.VISIT_ID=?))						
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='MZYYParameter' activate='yes' description='门诊用药提示参数查询'>
+		<QUERY type='parameter' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>VALUE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.VALUE AS VALUE
+				FROM
+					DWYL.YB_PARAMETER A
+				WHERE
+					A.MODULE LIKE '%门诊提示%'
+				AND	
+					A.CHARGE_TYPE='ALL'			
+			</SQL>
+			<PARAMETERS>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='PatientInfo' activate='yes' description='部分提示类查询'>		
+		<QUERY type='charge_type_change' activate='yes'>
+			<SELECTS>
+				<FIELD>OPER_DATE_TIME</FIELD>
+				<FIELD>CONTENTS</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(A.OPER_DATE_TIME,'yyyy-mm-dd HH:MM:SS') AS OPER_DATE_TIME,
+					A.CONTENTS AS CONTENTS
+				FROM
+					COMM.SYS_LOGS A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					(A.LOG_TYPE='17'
+				OR
+					A.LOG_TYPE='8')
+				AND
+					A.OPER_DATE_TIME=(SELECT MAX(OPER_DATE_TIME) FROM COMM.SYS_LOGS 					
+				WHERE	
+					PATIENT_ID=? 
+				AND 					
+					(LOG_TYPE='17' OR LOG_TYPE='8'))
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>		
+		<QUERY type='ZB_check1' activate='yes'>
+			<SELECTS>
+				<FIELD>JZLB</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.JZLB AS JZLB
+				FROM
+					MEDREC.PAT_VISIT A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='ZB_check2' activate='yes'>
+			<SELECTS>
+				<FIELD>PATIENT_ID_1</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.PATIENTID AS PATIENT_ID_1
+				FROM
+					DWYL.SYB_PAT_VISIT A
+				WHERE
+					A.PATIENTID=?
+				AND
+					A.VISITID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='ZB_check3' activate='yes'>
+			<SELECTS>
+				<FIELD>PATIENT_ID_2</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.PATIENT_ID AS PATIENT_ID_2
+				FROM
+					DWYL.TB_ADMIT A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YB_JZK_DICT' activate='yes' description='部分显示类，以武汉医保基准库费用比例计算为主'>
+		<QUERY type='all_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A')				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.YB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A'
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.ZFBL='0.00' OR B.ZFBL='0.10'))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='all_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?)				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.YB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.ZFBL='0.00' OR B.ZFBL='0.10'))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='TB_JZK_DICT' activate='yes'  description='部分显示类，以铁路医保基准库费用比例计算为主'>
+		<QUERY type='all_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A')				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.TB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A'
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.BXBZ > '1' OR '1' > B.BXBZ))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='all_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?)				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.TB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.BXBZ > '1' OR '1' > B.BXBZ))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SYB_JZK_DICT' activate='yes'  description='部分显示类，以省医保基准库费用比例计算为主'>
+		<QUERY type='all_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A')				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.SYB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A'
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.BX > '1' OR '1' > B.BX))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='all_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				)				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.SYB_JZK_DICT B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 	
+					A.ITEM_CODE=B.ITEM_CODE 
+				AND 
+					(B.BX > '1' OR '1' > B.BX))					
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='XNH_JZK_VS_PRICE_DICT' activate='yes' description='部分显示类查询，以新农合医保基准库费用比例计算为主'>
+		<QUERY type='all_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A')				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_drug_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_DRUG_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_DRUG_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					(select h.hoscode hoscode,
+                                         max(h.hositem) hositem,
+                                         max(h.wipeout) wipeout,
+                                         h.chargename chargename
+                                         from dwyl.xnh_jzk_vs_price_dict h
+                                         group by hoscode, chargename) B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND	
+					A.ITEM_CLASS='A'
+				AND 	
+					A.ITEM_CODE=B.HOSCODE 
+				AND 
+					B.WIPEOUT='1'
+				AND 
+					B.CHARGENAME=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT C
+				WHERE
+					C.PATIENT_ID=?
+				AND
+					C.VISIT_ID=?))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='all_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>ALL_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS ALL_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?)				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='public_item_charge' activate='yes'>
+			<SELECTS>
+				<FIELD>PUBLIC_ITEM_CHARGE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					TO_CHAR(SUM(CHARGES)) AS PUBLIC_ITEM_CHARGE
+				FROM
+					(SELECT A.CHARGES AS CHARGES
+				FROM
+					INP_BILL_DETAIL A,
+					(select h.hoscode hoscode,
+                                         max(h.hositem) hositem,
+                                         max(h.wipeout) wipeout,
+                                         h.chargename chargename
+                                         from dwyl.xnh_jzk_vs_price_dict h
+                                         group by hoscode, chargename) B
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 	
+					A.ITEM_CODE=B.HOSCODE 
+				AND 
+					B.WIPEOUT='1'
+				AND 
+					B.CHARGENAME=(SELECT
+					CHARGE_TYPE
+				FROM
+					MEDREC.PAT_VISIT C
+				WHERE
+					C.PATIENT_ID=?
+				AND
+					C.VISIT_ID=?))				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>	
+
+	<GROUP type='PatientZBInfo' activate='yes'  description='医保办理手续查询（护士站触发）'>
+		<QUERY type='ZB_check1' activate='yes'>
+			<SELECTS>
+				<FIELD>JZLB</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.JZLB AS JZLB
+				FROM
+					MEDREC.PAT_VISIT A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='ZB_check2' activate='yes'>
+			<SELECTS>
+				<FIELD>PATIENT_ID_1</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.PATIENTID AS PATIENT_ID_1
+				FROM
+					DWYL.SYB_PAT_VISIT A
+				WHERE
+					A.PATIENTID=?
+				AND
+					A.VISITID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='ZB_check3' activate='yes'>
+			<SELECTS>
+				<FIELD>PATIENT_ID_2</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.PATIENT_ID AS PATIENT_ID_2
+				FROM
+					DWYL.TB_ADMIT A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?				
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+
+	<GROUP type='ZGYBPreSettlementInfo' activate='yes' description='部分显示类查询，职工医保'>
+		<QUERY type='PreSettlementInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>JZLB</FIELD>
+				<FIELD>YLFYZE</FIELD>
+				<FIELD>PREPAYMENTS</FIELD>
+				<FIELD>GRZF</FIELD>
+				<FIELD>CZFJE</FIELD>
+				<FIELD>TCZFHJ</FIELD>
+				<FIELD>YBZFYJZ</FIELD>
+				<FIELD>SBPFHJ</FIELD>
+				<FIELD>JBYLTCBLF</FIELD>
+				<FIELD>JBYLBLZHF</FIELD>
+				<FIELD>NDYLFY</FIELD>
+				<FIELD>GRFDL</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.JZLB AS JZLB,
+					A.YLFYZE AS YLFYZE,
+					A.PREPAYMENTS AS PREPAYMENTS,
+					A.BCFYGRZF AS GRZF,
+					A.CZFJE AS CZFJE,
+					TO_CHAR(A.JBYLTCBLF+A.JBYLBLZHF) AS TCZFHJ,
+					A.MEDICARE_PAYMENT_WARNING_VALUE AS YBZFYJZ,
+					TO_CHAR(A.SBBT+A.SBPF) AS SBPFHJ,
+					A.JBYLTCBLF AS JBYLTCBLF,
+					A.JBYLBLZHF AS JBYLBLZHF,
+					A.NDYLFY AS NDYLFY,
+					TO_CHAR(ROUND((A.BCFYGRZF/A.YLFYZE),4)*100) AS GRFDL
+				FROM
+					DWYL.YB_PRESETTLE_NEW A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='JMDXYBPreSettlementInfo' activate='yes' description='部分显示类查询，居民医保，大学医保'>
+		<QUERY type='PreSettlementInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>JZLB</FIELD>
+				<FIELD>YLFYZE</FIELD>
+				<FIELD>PREPAYMENTS</FIELD>
+				<FIELD>GRZF</FIELD>
+				<FIELD>CZFJE</FIELD>
+				<FIELD>TCZFHJ</FIELD>
+				<FIELD>YBZFYJZ</FIELD>
+				<FIELD>SBPFHJ</FIELD>
+				<FIELD>JBYLTCBLF</FIELD>
+				<FIELD>JBYLBLZHF</FIELD>
+				<FIELD>NDYLFY</FIELD>
+				<FIELD>GRFDL</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.JZLB AS JZLB,
+					A.YLFYZE AS YLFYZE,
+					A.PREPAYMENTS AS PREPAYMENTS,
+					TO_CHAR(A.GRZF+A.CZFJE-A.SBBT-A.SBPF) AS GRZF,
+					A.CZFJE AS CZFJE,
+					TO_CHAR(A.JBYLTCBLF+A.JBYLBLZHF) AS TCZFHJ,
+					A.MEDICARE_PAYMENT_WARNING_VALUE AS YBZFYJZ,
+					TO_CHAR(A.SBBT+A.SBPF) AS SBPFHJ,
+					A.JBYLTCBLF AS JBYLTCBLF,
+					A.JBYLBLZHF AS JBYLBLZHF,
+					A.NDYLFY AS NDYLFY,
+					TO_CHAR(ROUND(((A.YLFYZE -(A.JBYLTCBLF+A.JBYLBLZHF)-(A.SBBT+A.SBPF))/A.YLFYZE),4)*100) AS GRFDL
+				FROM
+					DWYL.YB_PRESETTLE_NEW A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='ZGGSPreSettlementInfo' activate='yes' description='部分显示类查询，职工工伤'>
+		<QUERY type='PreSettlementInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>JZLB</FIELD>
+				<FIELD>YLFYZE</FIELD>
+				<FIELD>PREPAYMENTS</FIELD>
+				<FIELD>GRZF</FIELD>
+				<FIELD>ELZFZF</FIELD>
+				<FIELD>JJZF</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.JZLB AS JZLB,
+					A.YLFYZE AS YLFYZE,
+					A.PREPAYMENTS AS PREPAYMENTS,
+					A.QFJE AS GRZF,
+					A.ELZFZF AS ELZFZF,
+					A.GRZF AS JJZF
+				FROM
+					DWYL.YB_PRESETTLE_NEW A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SQDSPreSettlementInfo' activate='yes' description='部分显示类查询，市企离休、地伤伤残'>
+		<QUERY type='PreSettlementInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>JZLB</FIELD>
+				<FIELD>YLFYZE</FIELD>
+				<FIELD>PREPAYMENTS</FIELD>
+				<FIELD>GRZF</FIELD>
+				<FIELD>ELZFZF</FIELD>
+				<FIELD>TCZF</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.JZLB AS JZLB,
+					A.YLFYZE AS YLFYZE,
+					A.PREPAYMENTS AS PREPAYMENTS,
+					TO_CHAR(A.QFJE+A.ELZFZF) AS GRZF,
+					A.ELZFZF AS ELZFZF,
+					A.GRZF AS TCZF							
+				FROM
+					DWYL.YB_PRESETTLE_NEW A
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+
+	<GROUP type='JCTC_YYTS' activate='yes' description='部分用药提示，检查项目套餐提示查询'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>DATE_TIME</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT 
+					A.ENTER_DATE_TIME AS DATE_TIME
+				FROM 
+					DOCTOR_ORDERS A 
+				WHERE 
+					A.PATIENT_ID=?
+				AND 
+					A.VISIT_ID=? 
+				AND
+					A.ORDER_CLASS='C' 
+				AND
+					A.ORDER_CODE=?
+				AND 
+					A.ORDER_STATUS NOT IN('4')
+				ORDER BY A.ENTER_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='YB_JZK_DICT_YYTS' activate='yes' description='部分用药提示，以武汉医保基准库为主'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>ZFBL</FIELD>
+				<FIELD>SM</FIELD>
+				<FIELD>TIP_FLAG</FIELD>
+				<FIELD>ITEM_NAME</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ZFBL AS ZFBL,
+					A.SM AS SM,
+					A.TIP_FLAG AS TIP_FLAG,
+					A.ITEM_NAME AS ITEM_NAME
+				FROM
+					COMM.YB_JZK_DICT A
+				WHERE
+					A.ITEM_CODE=?
+				AND
+					A.ITEM_CLASS=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+				<PARAMETER>ITEM_CLASS</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='TB_JZK_DICT_YYTS' activate='yes' description='部分用药提示，以铁路医保基准库为主'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>BXBZ</FIELD>
+				<FIELD>SM</FIELD>
+				<FIELD>ITEM_NAME</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.BXBZ AS BXBZ,
+					A.SM AS SM,
+					A.ITEM_NAME AS ITEM_NAME
+				FROM
+					DWYL.VIEW_TB_JZK_DICT A
+				WHERE
+					A.ITEM_CODE=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SYB_JZK_DICT_YYTS' activate='yes' description='部分用药提示，以省医保基准库为主'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>BX</FIELD>
+				<FIELD>SM</FIELD>
+				<FIELD>ITEM_NAME</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.BX AS BX,
+					A.SM AS SM,
+					A.ITEM_NAME AS ITEM_NAME										
+				FROM
+					DWYL.VIEW_SYB_JZK_DICT A
+				WHERE
+					A.ITEM_CODE=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='XNH_JZK_VS_PRICE_DICT_YYTS' activate='yes' description='部分用药提示，以新农合基准库为主'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>WIPEOUT</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.WIPEOUT AS WIPEOUT								
+				FROM
+					DWYL.XNH_JZK_VS_PRICE_DICT A
+				WHERE
+					A.HOSCODE=?
+				AND
+					A.CHARGENAME=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='CHARGE_SPECIAL_ITEM_DICT_YYTS' activate='yes' description='部分用药提示，以省市公费军休基准库为主'>
+		<QUERY type='YYTS' activate='yes'>
+			<SELECTS>
+				<FIELD>PROPORTION_NUMERATOR</FIELD>
+				<FIELD>PROPORTION_DENOMINATOR</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.PROPORTION_NUMERATOR AS PROPORTION_NUMERATOR,
+					A.PROPORTION_DENOMINATOR AS PROPORTION_DENOMINATOR
+				FROM
+					COMM.CHARGE_SPECIAL_ITEM_DICT A
+				WHERE
+					A.ITEM_CLASS=?
+				AND
+					A.ITEM_CODE=?
+				AND
+					(A.ITEM_SPEC=? OR A.ITEM_SPEC='*')
+				AND 
+					CHARGE_TYPE=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CLASS</PARAMETER>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+				<PARAMETER>ITEM_SPEC</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='REPLACE_ITEM' activate='yes' description='部分用药提示，查询可能存在的两条项目（药物）'>
+		<QUERY type='replace_item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT	
+					A.ITEM_CODE AS ITEM_CODE,
+					C.DRUG_NAME AS ITEM_NAME,
+					A.PRIMARY_VALUE AS TYPE
+				FROM	
+					COMM.YB_SPECIAL_CONTROL_DICT A,
+					DRUG_NAME_DICT C
+				WHERE
+					C.DRUG_CODE=A.ITEM_CODE
+				AND
+					A.CLASS_CODE=(SELECT
+					B.CLASS_CODE
+				FROM
+					COMM.YB_SPECIAL_CONTROL_DICT B
+				WHERE
+					B.ITEM_CODE=?)
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='MZ_REPLACE_ITEM' activate='yes' description='门诊用药提示，针对武汉医保基准库查询可能存在的两条项目（药物）'>
+		<QUERY type='replace_item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>ZFBL</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT	
+					A.ITEM_CODE AS ITEM_CODE,
+					C.DRUG_NAME AS ITEM_NAME,
+					D.ZFBL AS ZFBL
+				FROM	
+					COMM.YB_SPECIAL_CONTROL_DICT A,
+					DRUG_NAME_DICT C,
+					COMM.YB_JZK_DICT D
+				WHERE
+					D.ITEM_CODE=A.ITEM_CODE
+				AND
+					C.DRUG_CODE=A.ITEM_CODE
+				AND
+					A.CLASS_CODE=(SELECT
+					B.CLASS_CODE
+				FROM
+					COMM.YB_SPECIAL_CONTROL_DICT B
+				WHERE
+					B.ITEM_CODE=?)
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='MZFYCX' activate='yes' description='门诊用药提示中的费用查询，以武汉医保基准库为主'>
+		<QUERY type='FYLX' activate='yes'>
+			<SELECTS>
+				<FIELD>ZFBL</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ZFBL AS ZFBL
+				FROM
+					COMM.YB_JZK_DICT A
+				WHERE
+					A.ITEM_CODE=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>	
+	<GROUP type='MZYYTS' activate='yes' description='门诊用药提示，以武汉医保基准库为主'>
+		<QUERY type='ZZTS' activate='yes'>
+			<SELECTS>
+				<FIELD>ZZXZ</FIELD>
+				<FIELD>ZZSM</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ZZXZ AS ZZXZ,	
+					A.ZZSM AS ZZSM
+				FROM
+					COMM.YB_JZK_DICT A
+				WHERE
+					A.ITEM_CODE=?
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='ZZYYDAYS' activate='yes'>
+			<SELECTS>
+				<FIELD>VISIT_DATE</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.VISIT_DATE AS VISIT_DATE,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS
+				FROM 
+					OUTP_DOCTOR_PRESC_ITEMS A
+				WHERE 
+					(VISIT_DATE, VISIT_NO) 
+				IN (
+				SELECT 
+					VISIT_DATE,
+					VISIT_NO 
+				FROM
+					OUTP_DOCTOR_PRESC_MASTER 
+				WHERE 
+					PATIENT_ID =? 
+				AND 
+					VISIT_DATE>=TO_DATE(?,'yyyy-mm-dd')) 
+				AND
+					(PHAM_CODE=? OR PHAM_CODE=?)
+				</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>LIMIT_DATE</PARAMETER>
+				<PARAMETER>ITEM_CODE</PARAMETER>
+				<PARAMETER>ITEM_CODE1</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='SELF_CHARGE_CONSENT_BASIC_INFO_BY_NO_VISIT_ID' activate='yes' description='自费知情同意书基本信息查询,在院病人，无需visit_id'>
+		<QUERY type='basicInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>SEX</FIELD>
+				<FIELD>CHARGE_TYPE</FIELD>
+				<FIELD>DEPT_NAME</FIELD>				
+				<FIELD>ADMISSION_DATE_TIME</FIELD>
+				<FIELD>DISCHARGE_DATE_TIME</FIELD>
+				<FIELD>VISIT_ID</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.SEX AS SEX,
+					B.CHARGE_TYPE AS CHARGE_TYPE,
+					D.DEPT_NAME AS DEPT_NAME,
+					B.ADMISSION_DATE_TIME AS ADMISSION_DATE_TIME,
+					B.DISCHARGE_DATE_TIME AS DISCHARGE_DATE_TIME,
+					B.VISIT_ID AS VISIT_ID
+				FROM
+					MEDREC.PAT_MASTER_INDEX A,
+					MEDREC.PAT_VISIT B,
+					PATS_IN_HOSPITAL C,
+					DEPT_DICT D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.PATIENT_ID=B.PATIENT_ID
+				AND
+					B.PATIENT_ID=C.PATIENT_ID
+				AND
+					B.VISIT_ID=C.VISIT_ID
+				AND
+					C.DEPT_CODE=D.DEPT_CODE
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='visitInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>VISIT_ID</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.VISIT_ID AS VISIT_ID
+				FROM
+					MEDREC.PAT_VISIT A
+				WHERE
+					A.PATIENT_ID=?
+				ORDER BY
+					A.VISIT_ID
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SELF_CHARGE_CONSENT_BASIC_INFO_BY_VISIT_ID' activate='yes' description='自费知情同意书基本信息查询,非在院病人，需visit_id'>
+		<QUERY type='basicInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>NAME</FIELD>
+				<FIELD>SEX</FIELD>
+				<FIELD>CHARGE_TYPE</FIELD>
+				<FIELD>DEPT_NAME</FIELD>				
+				<FIELD>ADMISSION_DATE_TIME</FIELD>
+				<FIELD>DISCHARGE_DATE_TIME</FIELD>
+				<FIELD>VISIT_ID</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.NAME AS NAME,
+					A.SEX AS SEX,
+					B.CHARGE_TYPE AS CHARGE_TYPE,
+					D.DEPT_NAME AS DEPT_NAME,
+					B.ADMISSION_DATE_TIME AS ADMISSION_DATE_TIME,
+					B.DISCHARGE_DATE_TIME AS DISCHARGE_DATE_TIME,
+					B.VISIT_ID AS VISIT_ID
+				FROM
+					MEDREC.PAT_MASTER_INDEX A,
+					MEDREC.PAT_VISIT B,
+					DEPT_DICT D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.PATIENT_ID=B.PATIENT_ID
+				AND
+					B.VISIT_ID=?
+				AND
+					B.DEPT_ADMISSION_TO=D.DEPT_CODE
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+		<QUERY type='visitInfo' activate='yes'>
+			<SELECTS>
+				<FIELD>VISIT_ID</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.VISIT_ID AS VISIT_ID
+				FROM
+					MEDREC.PAT_VISIT A
+				WHERE
+					A.PATIENT_ID=?
+				ORDER BY
+					A.VISIT_ID
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='YB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_ALL' activate='yes' description='武汉医保基准库自费知情同意书打印项目查询（查询所有项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE,A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.ZFBL AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO,
+					D.PRINT_DATE
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.YB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C,
+					DWYL.PRINT_ITEM_RECORD D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					NVL(A.YB_ITEM_CODE,A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND 
+					A.ITEM_CLASS=B.ITEM_CLASS(+)
+				AND
+					(B.ZFBL NOT IN('0.00')
+				OR
+					B.ZFBL IS NULL)
+				AND
+					A.PATIENT_ID=D.PATIENT_ID(+)
+				AND 
+					A.VISIT_ID=D.VISIT_ID(+)
+				AND
+					A.ITEM_NO=D.ITEM_NO(+)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='TB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_ALL' activate='yes' description='铁路医保自费知情同意书打印项目查询（查询所有项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.BXBZ AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO,
+					D.PRINT_DATE
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.TB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C,
+					DWYL.PRINT_ITEM_RECORD D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND
+				(	B.BXBZ NOT IN('0.00')
+				OR
+					B.BXBZ IS NULL)
+				AND
+					A.PATIENT_ID=D.PATIENT_ID(+)
+				AND 
+					A.VISIT_ID=D.VISIT_ID(+)
+				AND
+					A.ITEM_NO=D.ITEM_NO(+)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SYB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_ALL' activate='yes' description='省医保自费知情同意书打印项目查询（查询所有项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.BX AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO,
+					D.PRINT_DATE
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.SYB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C,
+					DWYL.PRINT_ITEM_RECORD D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND
+					(B.BX NOT IN('1') OR B.BX IS NULL)
+				AND
+					A.PATIENT_ID=D.PATIENT_ID(+)
+				AND 
+					A.VISIT_ID=D.VISIT_ID(+)
+				AND
+					A.ITEM_NO=D.ITEM_NO(+)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='XNH_JZK_VS_PRICE_DICT_SELF_CHARGE_CONSENT_ITEM_ALL' activate='yes' description='新农合自费知情同意书打印项目查询（查询所有项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.WIPEOUT AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO,
+					D.PRINT_DATE
+				FROM
+					INP_BILL_DETAIL A,
+					(select h.hoscode hoscode,
+                                         max(h.hositem) hositem,
+                                         max(h.wipeout) wipeout,
+                                         h.chargename chargename
+                                         from dwyl.xnh_jzk_vs_price_dict h
+                                         group by hoscode, chargename) B,
+					COMM.BILL_ITEM_CLASS_DICT C,
+					DWYL.PRINT_ITEM_RECORD D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					A.ITEM_CODE=B.HOSCODE(+)
+				AND
+					(B.WIPEOUT NOT IN('1') OR B.WIPEOUT IS NULL)
+				AND 
+					B.CHARGENAME(+)=?
+				AND
+					A.PATIENT_ID=D.PATIENT_ID(+)
+				AND 
+					A.VISIT_ID=D.VISIT_ID(+)
+				AND
+					A.ITEM_NO=D.ITEM_NO(+)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='CHARGE_SPECIAL_ITEM_DICT_SELF_CHARGE_CONSENT_ITEM_ALL' activate='yes' description='省市公费、军休自费知情同意书打印项目查询（查询所有项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					A.ITEM_NO AS ITEM_NO,
+					D.PRINT_DATE
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.CHARGE_SPECIAL_ITEM_DICT B,
+					COMM.BILL_ITEM_CLASS_DICT C,
+					DWYL.PRINT_ITEM_RECORD D
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					A.ITEM_CLASS=B.ITEM_CLASS
+				AND
+					A.ITEM_CODE=B.ITEM_CODE
+				AND
+					A.ITEM_SPEC=B.ITEM_SPEC
+				AND
+					B.CHARGE_TYPE=?
+				AND
+					B.PROPORTION_NUMERATOR>0
+				AND
+					A.PATIENT_ID=D.PATIENT_ID(+)
+				AND 
+					A.VISIT_ID=D.VISIT_ID(+)
+				AND
+					A.ITEM_NO=D.ITEM_NO(+)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='SELF_CHARGE_CONSENT_ITEM_PRINT' activate='yes' description='自费知情同意书打印项目查询（查询已打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>PRINT_DATE</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					A.ITEM_CODE,
+					A.ITEM_CLASS,
+					A.PRINT_DATE AS PRINT_DATE,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.ITEM_TYPE AS ITEM_TYPE,
+					A.PRICE AS PRICE,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					DWYL.PRINT_ITEM_RECORD A,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					((A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME)
+				OR 
+					A.BILLING_DATE_TIME is null)
+				AND
+					A.ITEM_CLASS IN(?)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='YB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_NO_PRINT' activate='yes' description='武汉医保自费知情同意书打印项目查询（查询未打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>				
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE,A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.ZFBL AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.YB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					(A.PATIENT_ID, A.VISIT_ID, A.ITEM_CODE, A.BILLING_DATE_TIME, A.ITEM_NO)
+				NOT IN(
+				SELECT PATIENT_ID, VISIT_ID, ITEM_CODE, BILLING_DATE_TIME, ITEM_NO 
+				FROM
+					DWYL.PRINT_ITEM_RECORD
+				WHERE
+					PATIENT_ID=?
+				AND
+					VISIT_ID=?
+				)	
+				AND
+					NVL(A.YB_ITEM_CODE,A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND 
+					A.ITEM_CLASS=B.ITEM_CLASS(+)
+				AND
+					(B.ZFBL NOT IN('0.00')
+				OR
+					B.ZFBL IS NULL)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='TB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_NO_PRINT' activate='yes' description='铁保自费知情同意书打印项目查询（查询未打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.BXBZ AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.TB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					(A.PATIENT_ID, A.VISIT_ID, A.ITEM_CODE, A.BILLING_DATE_TIME, A.ITEM_NO)
+				NOT IN(
+				SELECT PATIENT_ID, VISIT_ID, ITEM_CODE, BILLING_DATE_TIME, ITEM_NO
+				FROM
+					DWYL.PRINT_ITEM_RECORD
+				WHERE
+					PATIENT_ID=?
+				AND
+					VISIT_ID=?
+				)	
+				AND
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND
+				(	B.BXBZ NOT IN('0.00')
+				OR
+					B.BXBZ IS NULL)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SYB_JZK_DICT_SELF_CHARGE_CONSENT_ITEM_NO_PRINT' activate='yes' description='省医保自费知情同意书打印项目查询（查询未打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE) AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.BX AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					INP_BILL_DETAIL A,
+					DWYL.SYB_JZK_DICT B,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					(A.PATIENT_ID, A.VISIT_ID, A.ITEM_CODE, A.BILLING_DATE_TIME, A.ITEM_NO)
+				NOT IN(
+				SELECT PATIENT_ID, VISIT_ID, ITEM_CODE, BILLING_DATE_TIME, ITEM_NO 
+				FROM
+					DWYL.PRINT_ITEM_RECORD
+				WHERE
+					PATIENT_ID=?
+				AND
+					VISIT_ID=?
+				)	
+				AND
+					NVL(A.YB_ITEM_CODE, A.ITEM_CODE)=B.ITEM_CODE(+)
+				AND
+					(B.BX NOT IN('1') OR B.BX IS NULL)
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='XNH_JZK_VS_PRICE_DICT_SELF_CHARGE_CONSENT_ITEM_NO_PRINT' activate='yes' description='新农合自费知情同意书打印项目查询（查询未打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					B.WIPEOUT AS ITEM_TYPE,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					INP_BILL_DETAIL A,
+					(select h.hoscode hoscode,
+                                         max(h.hositem) hositem,
+                                         max(h.wipeout) wipeout,
+                                         h.chargename chargename
+                                         from dwyl.xnh_jzk_vs_price_dict h
+                                         group by hoscode, chargename) B,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					(A.PATIENT_ID, A.VISIT_ID, A.ITEM_CODE, A.BILLING_DATE_TIME, A.ITEM_NO)
+				NOT IN(
+				SELECT PATIENT_ID, VISIT_ID, ITEM_CODE, BILLING_DATE_TIME, ITEM_NO
+				FROM
+					DWYL.PRINT_ITEM_RECORD
+				WHERE
+					PATIENT_ID=?
+				AND
+					VISIT_ID=?
+				)	
+				AND
+					A.ITEM_CODE=B.HOSCODE(+)
+				AND
+				( B.WIPEOUT NOT IN('1') OR B.WIPEOUT IS NULL)
+				AND 
+					B.CHARGENAME(+)=?
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='CHARGE_SPECIAL_ITEM_DICT_SELF_CHARGE_CONSENT_ITEM_NO_PRINT' activate='yes' description='省市公费、军休自费知情同意书打印项目查询（查询未打印项目）'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>TIME</FIELD>
+				<FIELD>CLASS</FIELD>
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>AMOUNT</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>CHARGES</FIELD>
+				<FIELD>ITEM_NO</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					A.BILLING_DATE_TIME AS TIME,
+					C.CLASS_NAME AS CLASS,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,
+					A.AMOUNT AS AMOUNT,
+					A.UNITS AS UNITS,
+					A.CHARGES AS CHARGES,
+					A.ITEM_NO AS ITEM_NO
+				FROM
+					INP_BILL_DETAIL A,
+					COMM.CHARGE_SPECIAL_ITEM_DICT B,
+					BILL_ITEM_CLASS_DICT C
+				WHERE
+					A.PATIENT_ID=?
+				AND
+					A.VISIT_ID=?
+				AND 
+					A.ITEM_CLASS=C.CLASS_CODE
+				AND
+					A.BILLING_DATE_TIME > to_date(?,'yyyy-mm-dd')
+				AND
+					to_date(?,'yyyy-mm-dd') > A.BILLING_DATE_TIME
+				AND
+					A.ITEM_CLASS IN(?)
+				AND
+					(A.PATIENT_ID, A.VISIT_ID, A.ITEM_CODE, A.BILLING_DATE_TIME, A.ITEM_NO)
+				NOT IN(
+				SELECT PATIENT_ID, VISIT_ID, ITEM_CODE, BILLING_DATE_TIME, ITEM_NO
+				FROM
+					DWYL.PRINT_ITEM_RECORD
+				WHERE
+					PATIENT_ID=?
+				AND
+					VISIT_ID=?
+				)	
+				AND
+					A.ITEM_CLASS=B.ITEM_CLASS
+				AND
+					A.ITEM_CODE=B.ITEM_CODE
+				AND
+					A.ITEM_SPEC=B.ITEM_SPEC
+				AND
+					B.CHARGE_TYPE=?
+				AND
+					B.PROPORTION_NUMERATOR>0
+				ORDER BY A.BILLING_DATE_TIME DESC
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>START_DATE</PARAMETER>
+				<PARAMETER>END_DATE</PARAMETER>
+				<PARAMETER>ITEM_CLASS_LIST</PARAMETER>
+				<PARAMETER>PATIENT_ID</PARAMETER>
+				<PARAMETER>VISIT_ID</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	
+	<GROUP type='ITEM_QUERY' activate='yes' description='自费知情同意书添加项目查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.ZFBL AS ITEM_TYPE
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					CLINIC_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					YB_JZK_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND 
+					A.ITEM_CLASS=D.ITEM_CLASS
+				AND
+					A.ITEM_CODE=D.ITEM_CODE
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='YB_JZK_DICT_ITEM_QUERY' activate='yes' description='医保基准库自费知情同意书添加的项目类型查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.ZFBL AS ITEM_TYPE,
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					BILL_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					YB_JZK_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND 
+					A.ITEM_CLASS=D.ITEM_CLASS
+				AND
+					A.ITEM_CODE=D.ITEM_CODE
+				AND
+					(D.ZFBL NOT IN('0.00')
+				OR
+					D.ZFBL IS NULL)
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='TB_JZK_DICT_ITEM_TYPE_QUERY' activate='yes' description='铁保基准库自费知情同意书添加的项目类型查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.BXBZ AS ITEM_TYPE,
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					BILL_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					TB_JZK_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND
+					A.ITEM_CODE=D.ITEM_CODE
+				AND
+				(	D.BXBZ NOT IN('0.00')
+				OR
+					D.BXBZ IS NULL)
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='SYB_JZK_DICT_ITEM_TYPE_QUERY' activate='yes' description='省医保基准库自费知情同意书添加的项目类型查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.BX AS ITEM_TYPE,
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					BILL_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					SYB_JZK_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND
+					A.ITEM_CODE=D.ITEM_CODE
+				AND
+					(D.BX NOT IN('1') OR D.BX IS NULL)
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='XNH_JZK_VS_PRICE_DICT_ITEM_TYPE_QUERY' activate='yes' description='新农合基准库自费知情同意书添加的项目类型查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.WIPEOUT AS ITEM_TYPE,
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					BILL_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					XNH_JZK_VS_PRICE_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND 
+					A.ITEM_CODE=D.HOSCODE
+				AND
+					D.CHARGENAME=?
+				AND
+				( D.WIPEOUT NOT IN('1') OR D.WIPEOUT IS NULL)
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+	<GROUP type='CHARGE_SPECIAL_ITEM_DICT_ITEM_TYPE_QUERY' activate='yes' description='军休合基准库自费知情同意书添加的项目类型查询'>
+		<QUERY type='item' activate='yes'>
+			<SELECTS>
+				<FIELD>ITEM_NAME</FIELD>
+				<FIELD>CLASS_NAME</FIELD>				
+				<FIELD>ITEM_CODE</FIELD>
+				<FIELD>ITEM_CLASS</FIELD>
+				<FIELD>UNITS</FIELD>
+				<FIELD>PRICE</FIELD>
+				<FIELD>ITEM_TYPE</FIELD>
+			</SELECTS>
+			<SQL>
+				SELECT *
+				FROM
+				(SELECT
+					A.ITEM_NAME AS ITEM_NAME,
+					B.CLASS_NAME AS CLASS_NAME,
+					A.ITEM_CODE AS ITEM_CODE,
+					A.ITEM_CLASS AS ITEM_CLASS,	
+					C.UNITS AS UNITS,
+					C.PRICE AS PRICE,
+					D.WIPEOUT AS ITEM_TYPE,
+					ROWNUM AS rn
+				FROM
+					PRICE_ITEM_NAME_DICT A,
+					BILL_ITEM_CLASS_DICT B,
+					CURRENT_PRICE_LIST C,
+					CHARGE_SPECIAL_ITEM_DICT D
+				WHERE
+					A.INPUT_CODE LIKE '%?%'
+				AND
+					A.ITEM_CLASS=B.CLASS_CODE
+				AND
+					A.ITEM_CODE=C.ITEM_CODE
+				AND
+					A.ITEM_CLASS=D.ITEM_CLASS
+				AND
+					A.ITEM_CODE=D.ITEM_CODE
+				AND
+					A.ITEM_SPEC=D.ITEM_SPEC
+				AND
+					D.CHARGE_TYPE=?
+				AND
+					D.PROPORTION_NUMERATOR>0
+				) E
+				WHERE
+					E.rn between ? and ?
+			</SQL>
+			<PARAMETERS>
+				<PARAMETER>CODE</PARAMETER>
+				<PARAMETER>CHARGE_TYPE</PARAMETER>
+				<PARAMETER>RECORD1</PARAMETER>
+				<PARAMETER>RECORD2</PARAMETER>
+			</PARAMETERS>
+		</QUERY>
+	</GROUP>
+</CONFIG>

@@ -1,0 +1,13 @@
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Debug\testMFCDllApp.exe
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Debug\testMFCDllApp.pdb
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.Form1.resources
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.Properties.Resources.resources
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.csproj.GenerateResource.Cache
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.exe
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.pdb
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Debug\testMFCDllApp.exe.manifest
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Debug\testMFCDllApp.application
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.exe.manifest
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.application
+D:\Project\Lab_Project\MIES\MIES\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.exe
+D:\Project\Lab_Project\MIES\MIES\testMFCDllApp\testMFCDllApp\obj\x64\Debug\testMFCDllApp.pdb

@@ -1,0 +1,14 @@
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Release\testMFCDllApp.exe
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Release\testMFCDllApp.pdb
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.Form1.resources
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.Properties.Resources.resources
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.csproj.GenerateResource.Cache
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.exe
+D:\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.pdb
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.exe
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.pdb
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Release\testMFCDllApp.exe
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\bin\x64\Release\testMFCDllApp.pdb
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.Form1.resources
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.Properties.Resources.resources
+D:\Project\Lab_Project\testMFCDllApp\testMFCDllApp\obj\x64\Release\testMFCDllApp.csproj.GenerateResource.Cache
